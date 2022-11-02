@@ -6,6 +6,7 @@ const Card = ({ name, price, imageUrl, onClickFavorite, onPlus }) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const onClickPlus = () => {
+    onPlus({ name, price, imageUrl });
     setIsAdded(!isAdded);
   };
 
