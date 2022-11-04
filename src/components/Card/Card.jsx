@@ -12,7 +12,6 @@ const Card = ({
   onFavorite,
   onPlus,
   favorited = false,
-  added = false,
   loading = false,
 }) => {
   const { isItemAdded } = useContext(AppContext);
@@ -64,7 +63,9 @@ const Card = ({
             <img
               className={styles.plus}
               onClick={onClickPlus}
-              src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+              src={
+                isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"
+              }
               alt="plus"
             />
           </div>

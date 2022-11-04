@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AppContext from "./context";
+import Info from "./Info";
 
 const Drawer = ({ items, onClose, onRemove }) => {
+  const { setCartItems } = useContext(AppContext);
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
+
+  const onClickOrder = () => {
+    setIsOrderComplete(true);
+    setCartItems([]);
+  };
+
   return (
     <div className="overlay">
       <div className="drawer">
@@ -14,7 +24,7 @@ const Drawer = ({ items, onClose, onRemove }) => {
           />
         </h2>
         {items.length > 0 ? (
-          <>
+          <div className="d-flex flex-column flex">
             <div className="items">
               {items.map((obj) => (
                 <div
@@ -52,29 +62,25 @@ const Drawer = ({ items, onClose, onRemove }) => {
                   <b>20 $</b>
                 </li>
               </ul>
-              <button className="greenButton">
+              <button onClick={onClickOrder} className="greenButton">
                 Continue to checkout <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
-          </>
-        ) : (
-          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-            <img
-              className="mb-20"
-              width="120px"
-              height="120px"
-              src="/img/empty-cart.jpg"
-              alt="Empty"
-            />
-            <h2>Empty cart</h2>
-            <p className="opacity-6">
-              Please add at least one product to proceed with the order
-            </p>
-            <button onClick={onClose} className="greenButton">
-              <img src="/img/arrow.svg" alt="Arrow" />
-              Return
-            </button>
           </div>
+        ) : (
+          <Info
+            title={isOrderComplete ? "Order completed!" : "Empty basket"}
+            description={
+              isOrderComplete
+                ? "Your order will be delivered soon!"
+                : "Please add at least one product to proceed with the order"
+            }
+            image={
+              isOrderComplete
+                ? "/img/complete-order.jpg"
+                : "/img/empty-cart.jpg"
+            }
+          />
         )}
       </div>
     </div>
