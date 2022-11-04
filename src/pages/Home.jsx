@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Card from "../components/Card/Card";
 
@@ -9,11 +9,26 @@ const Home = ({
   onSearchInput,
   onAddToFavorite,
   onAddToCard,
+  isLoading,
 }) => {
+  const renderItems = () => {
+    const filtredItems = items.filter((item) =>
+      item.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
+      <Card
+        key={index}
+        onFavorite={(obj) => onAddToFavorite(obj)}
+        onPlus={(obj) => onAddToCard(obj)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
+  };
   return (
     <div className="content  p-40">
       <div className="d-flex align-center justify-between mb-40">
-        <h1>All shoes</h1>
+        <h1> {searchValue ? `Search by: ${searchValue}` : "All shoes"}</h1>
         <div className="search-block d-flex">
           <img src="/img/search.svg" alt="Search" />
           {searchValue && (
@@ -32,18 +47,7 @@ const Home = ({
         </div>
       </div>
 
-      <div className="d-flex flex-wrap">
-        {items
-          .filter((item) => item.name.toLowerCase().includes(searchValue))
-          .map((item, id) => (
-            <Card
-              {...item}
-              key={id}
-              onFavorite={(obj) => onAddToFavorite(obj)}
-              onPlus={(obj) => onAddToCard(obj)}
-            />
-          ))}
-      </div>
+      <div className="d-flex flex-wrap">{renderItems()}</div>
     </div>
   );
 };
