@@ -4,9 +4,10 @@ import axios from "axios";
 import AppContext from "./components/context";
 
 import Header from "./components/Header";
-import Drawer from "./components/Drawer";
+import Drawer from "./components/Drawer/Drawer";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import Orders from "./pages/Orders";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -21,12 +22,11 @@ function App() {
       const cartResponse = await axios.get(
         "https://636513347b209ece0f569692.mockapi.io/cart"
       );
-
       const favoriteResponse = await axios.get(
         "https://636513347b209ece0f569692.mockapi.io/favorite"
       );
       const itemsResponse = await axios.get(
-        "https://63452c19dcae733e8feb2bd7.mockapi.io/sneakers"
+        "https://636513347b209ece0f569692.mockapi.io/sneakers"
       );
 
       setIsLoading(false);
@@ -94,19 +94,19 @@ function App() {
         favorites,
         isItemAdded,
         onAddToFavorite,
+        onAddToCard,
         setCartOpened,
         setCartItems,
         cartItems,
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
-          <Drawer
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
-          />
-        )}
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpened}
+        />
         <Header onClickCart={() => setCartOpened(true)} />
 
         <Routes>
@@ -126,6 +126,7 @@ function App() {
             }
           />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </div>
     </AppContext.Provider>
