@@ -19,11 +19,11 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       const cartResponse = await axios.get(
-        "https://63452c19dcae733e8feb2bd7.mockapi.io/cart"
+        "https://636513347b209ece0f569692.mockapi.io/cart"
       );
 
       const favoriteResponse = await axios.get(
-        "https://63452c19dcae733e8feb2bd7.mockapi.io/favorite"
+        "https://636513347b209ece0f569692.mockapi.io/favorite"
       );
       const itemsResponse = await axios.get(
         "https://63452c19dcae733e8feb2bd7.mockapi.io/sneakers"
@@ -38,23 +38,21 @@ function App() {
   }, []);
 
   const onAddToCard = (obj) => {
-    console.log(obj);
-
     if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
       axios.delete(
-        `https://63452c19dcae733e8feb2bd7.mockapi.io/cart/${obj.id}`
+        `https://636513347b209ece0f569692.mockapi.io/cart/${obj.id}`
       );
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(obj.id))
       );
     } else {
-      axios.post("https://63452c19dcae733e8feb2bd7.mockapi.io/cart", obj);
+      axios.post("https://636513347b209ece0f569692.mockapi.io/cart", obj);
       setCartItems((prev) => [...prev, obj]);
     }
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(`https://63452c19dcae733e8feb2bd7.mockapi.io/cart/${id}`);
+    axios.delete(`https://636513347b209ece0f569692.mockapi.io/cart/${id}`);
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -62,7 +60,7 @@ function App() {
     try {
       if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
         axios.delete(
-          `https://63452c19dcae733e8feb2bd7.mockapi.io/favorite/${obj.id}`
+          `https://636513347b209ece0f569692.mockapi.io/favorite/${obj.id}`
         );
 
         setFavorites((prev) =>
@@ -70,7 +68,7 @@ function App() {
         );
       } else {
         const { data } = await axios.post(
-          "https://63452c19dcae733e8feb2bd7.mockapi.io/favorite",
+          "https://636513347b209ece0f569692.mockapi.io/favorite",
           obj
         );
         setFavorites((prev) => [...prev, data]);
@@ -98,6 +96,7 @@ function App() {
         onAddToFavorite,
         setCartOpened,
         setCartItems,
+        cartItems,
       }}
     >
       <div className="wrapper clear">

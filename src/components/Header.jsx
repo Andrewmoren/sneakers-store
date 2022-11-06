@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AppContext from "./context";
 
 const Header = ({ onClickCart }) => {
+  const { cartItems } = useContext(AppContext);
+
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -45,7 +50,7 @@ const Header = ({ onClickCart }) => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>400 $</span>
+            <span>{totalPrice} $</span>
           </li>
           <li className="mr-5 cu-p">
             <Link to="/favorites">
