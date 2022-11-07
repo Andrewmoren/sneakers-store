@@ -17,9 +17,7 @@ const Orders = () => {
         );
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
-      } catch (error) {
-        alert("Error!");
-      }
+      } catch (error) {}
     })();
   }, []);
 
@@ -30,11 +28,9 @@ const Orders = () => {
       </div>
 
       <div className="d-flex flex-wrap">
-        {isLoading
-          ? [...Array(8)]
-          : orders.map((item, index) => (
-              <Card key={index} loading={isLoading} {...item} />
-            ))}
+        {(isLoading ? [...Array(8)] : orders).map((item, index) => (
+          <Card key={index} loading={isLoading} {...item} />
+        ))}
       </div>
     </div>
   );

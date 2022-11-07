@@ -40,9 +40,7 @@ function App() {
         setCartItems(cartResponse.data);
         setFavorites(favoriteResponse.data);
         setItems(itemsResponse.data);
-      } catch (error) {
-        alert("Error!");
-      }
+      } catch (error) {}
     }
     fetchData();
   }, []);
@@ -107,7 +105,7 @@ function App() {
         setFavorites((prev) => [...prev, data]);
       }
     } catch (err) {
-      alert("Error!");
+      console.log("ghj,ktvf");
     }
   };
 

@@ -6,7 +6,7 @@ import { useCart } from "../hooks/useCart";
 
 import styles from "./Drawer.module.scss";
 
-const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Drawer = ({ items = [], onClose, onRemove, opened }) => {
   const { cartItems, setCartItems, totalPrice } = useCart();
@@ -29,13 +29,11 @@ const Drawer = ({ items = [], onClose, onRemove, opened }) => {
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
         await axios.delete(
-          "https://636513347b209ece0f569692.mockapi.io/cart" + item.id
+          "https://636513347b209ece0f569692.mockapi.io/cart/" + item.id
         );
         await delay(1000);
       }
-    } catch (error) {
-      alert("Error");
-    }
+    } catch (error) {}
     setIsLoading(false);
   };
 
